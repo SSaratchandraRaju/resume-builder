@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/resume.css" />
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="form-section">
+            <form id="resumeForm">
+                <h1>Resume Builder</h1>
+
+                <!-- Step Indicators -->
+                <div class="step-cards">
+                    <div class="step-card active" data-step="1">Personal Info</div>
+                    <div class="step-card" data-step="2">Summary</div>
+                    <div class="step-card" data-step="3">Experience</div>
+                    <div class="step-card" data-step="4">Education</div>
+                    <div class="step-card" data-step="5">Skills</div>
+                    <div class="step-card" data-step="6">Projects</div>
+                    <div class="step-card" data-step="7">Additional Info</div>
+                </div>
+
+
+                <!-- Step 1: Personal Info -->
+                <div id="step1" class="step active">
+                    <h2>Personal Information</h2>
+                    <label>Full Name: <input type="text" name="name" required /></label>
+                    <label>Email: <input type="email" name="email" required /></label>
+                    <label>Phone: <input type="text" name="phone" required /></label>
+                    <label>Address: <input type="text" name="address" /></label>
+                    <label>LinkedIn: <input type="url" name="linkedin" /></label>
+                    <label>GitHub: <input type="url" name="github" /></label>
+                    <label>Portfolio: <input type="url" name="portfolio" /></label>
+                </div>
+
+                <!-- Step 2: Summary -->
+                <div id="step2" class="step">
+                    <h2>Professional Summary</h2>
+                    <label>Write a brief summary about yourself:
+                        <textarea name="summary" rows="5" placeholder="Experienced professional with..."></textarea>
+                    </label>
+                </div>
+
+                <!-- Step 3: Experience -->
+                <div id="step3" class="step">
+                    <h2>Work Experience</h2>
+                    <div id="experience-container">
+                        <div class="experience-item">
+                            <label>Job Title: <input type="text" name="experience[0][title]" required /></label>
+                            <label>Company: <input type="text" name="experience[0][company]" required /></label>
+                            <label>Location: <input type="text" name="experience[0][location]" /></label>
+                            <label>Start Date: <input type="month" name="experience[0][start]" required /></label>
+                            <label>End Date: <input type="month" name="experience[0][end]" /></label>
+                            <label>Currently Working Here: <input type="checkbox"
+                                    name="experience[0][current]" /></label>
+                            <label>Description:
+                                <textarea name="experience[0][description]" rows="3"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="section-controls">
+                        <button type="button" class="add-btn" onclick="addExperience()">Add Experience</button>
+                        <button type="button" class="remove-btn" onclick="removeExperience()">Remove Last</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Education -->
+                <div id="step4" class="step">
+                    <h2>Education</h2>
+                    <div id="education-container">
+                        <div class="education-item">
+                            <label>Degree: <input type="text" name="education[0][degree]" required /></label>
+                            <label>Institution: <input type="text" name="education[0][institution]" required /></label>
+                            <label>Field of Study: <input type="text" name="education[0][field]" /></label>
+                            <label>Location: <input type="text" name="education[0][location]" /></label>
+                            <label>Start Date: <input type="month" name="education[0][start]" required /></label>
+                            <label>End Date: <input type="month" name="education[0][end]" required /></label>
+                            <label>GPA: <input type="text" name="education[0][gpa]" /></label>
+                        </div>
+                    </div>
+                    <div class="section-controls">
+                        <button type="button" class="add-btn" onclick="addEducation()">Add Education</button>
+                        <button type="button" class="remove-btn" onclick="removeEducation()">Remove Last</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Skills -->
+                <div id="step5" class="step">
+                    <h2>Skills</h2>
+                    <div id="skills-container">
+                        <div class="skill-item">
+                            <label>Skill: <input type="text" name="skills[0][name]" required /></label>
+                            <label>Proficiency:
+                                <select name="skills[0][level]" required>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                    <option value="Expert">Expert</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="section-controls">
+                        <button type="button" class="add-btn" onclick="addSkill()">Add Skill</button>
+                        <button type="button" class="remove-btn" onclick="removeSkill()">Remove Last</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Projects -->
+                <div id="step6" class="step">
+                    <h2>Projects</h2>
+                    <div id="projects-container">
+                        <div class="project-item">
+                            <label>Project Name: <input type="text" name="projects[0][name]" required /></label>
+                            <label>Technologies Used: <input type="text" name="projects[0][tech]" /></label>
+                            <label>Description:
+                                <textarea name="projects[0][description]" rows="3"></textarea>
+                            </label>
+                            <label>Project URL: <input type="url" name="projects[0][url]" /></label>
+                        </div>
+                    </div>
+                    <div class="section-controls">
+                        <button type="button" class="add-btn" onclick="addProject()">Add Project</button>
+                        <button type="button" class="remove-btn" onclick="removeProject()">Remove Last</button>
+                    </div>
+                </div>
+
+                <!-- Step 7: Additional Info -->
+                <div id="step7" class="step">
+                    <h2>Additional Information</h2>
+                    <label>Languages:
+                        <input type="text" name="languages" placeholder="English, Spanish, etc." />
+                    </label>
+                    <label>Hobbies/Interests:
+                        <textarea name="hobbies" rows="3" placeholder="Photography, Hiking, etc."></textarea>
+                    </label>
+                    <label>Certifications:
+                        <textarea name="certifications" rows="3"
+                            placeholder="List any relevant certifications"></textarea>
+                    </label>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="buttons">
+                    <button type="button" id="backBtn" onclick="prevStep()">Back</button>
+                    <button type="button" id="nextBtn" onclick="nextStep()">Next</button>
+                    <button type="button" id="finishBtn" style="display: none;" onclick="generateResume()">Finish &
+                        Generate Resume</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-section">
+            <h2>Live Preview</h2>
+            <div id="preview" class="preview"></div>
+            <button id="printBtn" onclick="window.print()" style="display: none;">Print PDF</button>
+            <button id="downloadBtn" style="display: none;">Download PDF</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="js/app.js" type="module"></script>
+    <script>
+    let currentStep = 1;
+    const totalSteps = 7;
+    let resumeData = {};
+    
+    function nextStep() {
+        if (!validateStep(currentStep)) {
+            alert('Please fill all required fields');
+            return;
+        }
+        
+        if (currentStep < totalSteps) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep++;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            updateButtons();
+            updateStepIndicators();
+        }
+    }
+    
+    function prevStep() {
+        if (currentStep > 1) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            updateButtons();
+            updateStepIndicators();
+        }
+    }
+    
+    function updateButtons() {
+        document.getElementById('backBtn').style.display = currentStep === 1 ? 'none' : 'block';
+        document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'block';
+        document.getElementById('finishBtn').style.display = currentStep === totalSteps ? 'block' : 'none';
+    }
+    
+    function updateStepIndicators() {
+        const indicators = document.querySelectorAll('.step-card');
+        indicators.forEach(indicator => {
+            const step = parseInt(indicator.getAttribute('data-step'));
+            indicator.classList.toggle('active', step === currentStep);
+            indicator.classList.toggle('completed', step < currentStep);
+        });
+    }
+    
+    // Add click handlers for step indicators
+    document.querySelectorAll('.step-card').forEach(indicator => {
+        indicator.addEventListener('click', () => {
+            const step = parseInt(indicator.getAttribute('data-step'));
+            if (step !== currentStep) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep = step;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateButtons();
+                updateStepIndicators();
+            }
+        });
+    });
+    
+    // Form validation before proceeding to next step
+    function validateStep(step) {
+        const inputs = document.querySelectorAll(`#step${step} [required]`);
+        let isValid = true;
+        
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.style.borderColor = 'red';
+                isValid = false;
+            } else {
+                input.style.borderColor = '';
+            }
+        });
+        
+        return isValid;
+    }
+    
+    // Collect all form data
+    function collectFormData() {
+        const form = document.getElementById('resumeForm');
+        const formData = new FormData(form);
+        
+        // Convert FormData to object
+        const data = {};
+        formData.forEach((value, key) => {
+            // Handle nested objects (experience[0][title] etc.)
+            if (key.includes('[') && key.includes(']')) {
+                const parts = key.split(/\[|\]/).filter(part => part !== '');
+                let current = data;
+                
+                for (let i = 0; i < parts.length - 1; i++) {
+                    const part = parts[i];
+                    if (!current[part]) {
+                        // Check if the next part is a number (array)
+                        if (!isNaN(parts[i + 1])) {
+                            current[part] = [];
+                        } else {
+                            current[part] = {};
+                        }
+                    }
+                    current = current[part];
+                }
+                
+                current[parts[parts.length - 1]] = value;
+            } else {
+                data[key] = value;
+            }
+        });
+        
+        return data;
+    }
+    
+    // Generate the resume HTML for preview and PDF
+    function generateResumeHTML(data) {
+        return `
+            <div class="resume">
+                <header class="resume-header">
+                    <h1>${data.name || 'Your Name'}</h1>
+                    <div class="contact-info">
+                        ${data.email ? `<div>Email: ${data.email}</div>` : ''}
+                        ${data.phone ? `<div>Phone: ${data.phone}</div>` : ''}
+                        ${data.address ? `<div>Address: ${data.address}</div>` : ''}
+                        ${data.linkedin ? `<div>LinkedIn: <a href="${data.linkedin}" target="_blank">${data.linkedin}</a></div>` : ''}
+                        ${data.github ? `<div>GitHub: <a href="${data.github}" target="_blank">${data.github}</a></div>` : ''}
+                        ${data.portfolio ? `<div>Portfolio: <a href="${data.portfolio}" target="_blank">${data.portfolio}</a></div>` : ''}
+                    </div>
+                </header>
+                
+                ${data.summary ? `
+                <section class="resume-section">
+                    <h2>Professional Summary</h2>
+                    <p>${data.summary}</p>
+                </section>
+                ` : ''}
+                
+                ${data.experience && data.experience.length > 0 ? `
+                <section class="resume-section">
+                    <h2>Work Experience</h2>
+                    ${data.experience.map(exp => `
+                        <div class="experience-item">
+                            <h3>${exp.title || 'Position'} - ${exp.company || 'Company'}</h3>
+                            <div class="experience-details">
+                                ${exp.location ? `<span>${exp.location}</span>` : ''}
+                                <span>${formatDate(exp.start)} - ${exp.current ? 'Present' : formatDate(exp.end)}</span>
+                            </div>
+                            ${exp.description ? `<p>${exp.description}</p>` : ''}
+                        </div>
+                    `).join('')}
+                </section>
+                ` : ''}
+                
+                ${data.education && data.education.length > 0 ? `
+                <section class="resume-section">
+                    <h2>Education</h2>
+                    ${data.education.map(edu => `
+                        <div class="education-item">
+                            <h3>${edu.degree || 'Degree'} - ${edu.institution || 'Institution'}</h3>
+                            <div class="education-details">
+                                ${edu.field ? `<span>${edu.field}</span>` : ''}
+                                ${edu.location ? `<span>${edu.location}</span>` : ''}
+                                <span>${formatDate(edu.start)} - ${formatDate(edu.end)}</span>
+                                ${edu.gpa ? `<span>GPA: ${edu.gpa}</span>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </section>
+                ` : ''}
+                
+                ${data.skills && data.skills.length > 0 ? `
+                <section class="resume-section">
+                    <h2>Skills</h2>
+                    <div class="skills-container">
+                        ${data.skills.map(skill => `
+                            <div class="skill-item">
+                                <span class="skill-name">${skill.name || 'Skill'}</span>
+                                <span class="skill-level">${skill.level || 'Beginner'}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+                ` : ''}
+                
+                ${data.projects && data.projects.length > 0 ? `
+                <section class="resume-section">
+                    <h2>Projects</h2>
+                    ${data.projects.map(project => `
+                        <div class="project-item">
+                            <h3>${project.name || 'Project Name'}</h3>
+                            ${project.tech ? `<div class="project-tech">Technologies: ${project.tech}</div>` : ''}
+                            ${project.description ? `<p>${project.description}</p>` : ''}
+                            ${project.url ? `<div class="project-link"><a href="${project.url}" target="_blank">View Project</a></div>` : ''}
+                        </div>
+                    `).join('')}
+                </section>
+                ` : ''}
+                
+                ${data.languages || data.hobbies || data.certifications ? `
+                <section class="resume-section">
+                    <h2>Additional Information</h2>
+                    ${data.languages ? `<div><strong>Languages:</strong> ${data.languages}</div>` : ''}
+                    ${data.hobbies ? `<div><strong>Hobbies/Interests:</strong> ${data.hobbies}</div>` : ''}
+                    ${data.certifications ? `<div><strong>Certifications:</strong> ${data.certifications}</div>` : ''}
+                </section>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    // Format date from YYYY-MM to Month YYYY
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const [year, month] = dateString.split('-');
+        const date = new Date(year, month - 1);
+        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    }
+    
+    // Generate the resume and show preview
+    function generateResume() {
+        resumeData = collectFormData();
+        const resumeHTML = generateResumeHTML(resumeData);
+        document.getElementById('preview').innerHTML = resumeHTML;
+        
+        // Show download and print buttons
+        document.getElementById('printBtn').style.display = 'inline-block';
+        document.getElementById('downloadBtn').style.display = 'inline-block';
+    }
+    
+    // Download as PDF
+    document.getElementById('downloadBtn').addEventListener('click', async function() {
+        // Use html2pdf.js for PDF generation
+        const element = document.getElementById('preview');
+        const opt = {
+            margin: 10,
+            filename: 'resumeBuilder.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        
+        try {
+            // Load html2pdf.js dynamically if not already loaded
+            if (typeof html2pdf !== 'undefined') {
+                await html2pdf().from(element).set(opt).save();
+            } else {
+                // Load the library
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+                script.onload = () => {
+                    html2pdf().from(element).set(opt).save();
+                };
+                document.head.appendChild(script);
+            }
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            alert('Error generating PDF. Please try again.');
+        }
+    });
+    
+    // Print the resume
+    document.getElementById('printBtn').addEventListener('click', function() {
+        const originalContent = document.body.innerHTML;
+        const printContent = document.getElementById('preview').innerHTML;
+        
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+        location.reload(); // Refresh to restore functionality
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        updateButtons();
+        updateStepIndicators();
+        
+        // Add event listeners for dynamic sections
+        document.getElementById('downloadBtn').addEventListener('click', downloadResumeAsPDF);
+        document.getElementById('printBtn').addEventListener('click', printResume);
+    });
+
+    // Dynamic section functions
+    let experienceCount = 1;
+    let educationCount = 1;
+    let skillCount = 1;
+    let projectCount = 1;
+
+    function addExperience() {
+        const container = document.getElementById('experience-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'experience-item';
+        newItem.innerHTML = `
+            <label>Job Title: <input type="text" name="experience[${experienceCount}][title]" required /></label>
+            <label>Company: <input type="text" name="experience[${experienceCount}][company]" required /></label>
+            <label>Location: <input type="text" name="experience[${experienceCount}][location]" /></label>
+            <label>Start Date: <input type="month" name="experience[${experienceCount}][start]" required /></label>
+            <label>End Date: <input type="month" name="experience[${experienceCount}][end]" /></label>
+            <label>Currently Working Here: <input type="checkbox" name="experience[${experienceCount}][current]" /></label>
+            <label>Description: <textarea name="experience[${experienceCount}][description]" rows="3"></textarea></label>
+        `;
+        container.appendChild(newItem);
+        experienceCount++;
+    }
+
+    function removeExperience() {
+        const container = document.getElementById('experience-container');
+        if (container.children.length > 1) {
+            container.removeChild(container.lastChild);
+            experienceCount--;
+        }
+    }
+
+    function addEducation() {
+        const container = document.getElementById('education-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'education-item';
+        newItem.innerHTML = `
+            <label>Degree: <input type="text" name="education[${educationCount}][degree]" required /></label>
+            <label>Institution: <input type="text" name="education[${educationCount}][institution]" required /></label>
+            <label>Field of Study: <input type="text" name="education[${educationCount}][field]" /></label>
+            <label>Location: <input type="text" name="education[${educationCount}][location]" /></label>
+            <label>Start Date: <input type="month" name="education[${educationCount}][start]" required /></label>
+            <label>End Date: <input type="month" name="education[${educationCount}][end]" required /></label>
+            <label>GPA: <input type="text" name="education[${educationCount}][gpa]" /></label>
+        `;
+        container.appendChild(newItem);
+        educationCount++;
+    }
+
+    function removeEducation() {
+        const container = document.getElementById('education-container');
+        if (container.children.length > 1) {
+            container.removeChild(container.lastChild);
+            educationCount--;
+        }
+    }
+
+    function addSkill() {
+        const container = document.getElementById('skills-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'skill-item';
+        newItem.innerHTML = `
+            <label>Skill: <input type="text" name="skills[${skillCount}][name]" required /></label>
+            <label>Proficiency:
+                <select name="skills[${skillCount}][level]" required>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Expert">Expert</option>
+                </select>
+            </label>
+        `;
+        container.appendChild(newItem);
+        skillCount++;
+    }
+
+    function removeSkill() {
+        const container = document.getElementById('skills-container');
+        if (container.children.length > 1) {
+            container.removeChild(container.lastChild);
+            skillCount--;
+        }
+    }
+
+    function addProject() {
+        const container = document.getElementById('projects-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'project-item';
+        newItem.innerHTML = `
+            <label>Project Name: <input type="text" name="projects[${projectCount}][name]" required /></label>
+            <label>Technologies Used: <input type="text" name="projects[${projectCount}][tech]" /></label>
+            <label>Description: <textarea name="projects[${projectCount}][description]" rows="3"></textarea></label>
+            <label>Project URL: <input type="url" name="projects[${projectCount}][url]" /></label>
+        `;
+        container.appendChild(newItem);
+        projectCount++;
+    }
+
+    function removeProject() {
+        const container = document.getElementById('projects-container');
+        if (container.children.length > 1) {
+            container.removeChild(container.lastChild);
+            projectCount--;
+        }
+    }
+</script>
+
+<!-- Add html2pdf.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script src="js/form.js" type="module"></script>
+
+</body>
+
+</html>
